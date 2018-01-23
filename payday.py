@@ -39,10 +39,6 @@ except ValueError:
 print('Your monthly worked weeks are', w)
 print('\n')
 
-#Week pay
-#payGrossWeek = hc * r
-#payGrossWeek = float('{0:.2f}'.format(payGrossWeek))
-#print('Weekly Gross pay is', payGrossWeek)
 
 #Month pay (Extra Hours Pay added)
 payGrossMonth = ((hc * w) + eh) * r
@@ -51,44 +47,39 @@ print('Monthly Gross Pay is', payGrossMonth)
 print('\n')
 
 
-#NI tax week
-#nInsuranceWeek = 0
-#if payGrossWeek >= 157.00 :
-#    nInsuranceWeek = ((payGrossWeek - 157) * 12) / 100
-#if payGrossWeek >= 866.00:
-#    nInsuranceWeek = (((866-157) * 12) / 100) + (((payGrossWeek - 866) * 2) / 100)
-#nInsuranceWeek = float('{0:.2f}'.format(nInsuranceWeek))
-#print('National Insurance week is', nInsuranceWeek)
 
 #NI tax month
-nInsuranceMonth = 0
-if payGrossMonth >= 680:
-    nInsuranceMonth = ((payGrossMonth - 680) * 12) / 100
-if payGrossMonth >= 3750:
-    nInsuranceMonth = (((3750 - 680) * 12) / 100) + (((payGrossMonth - 3750) * 2) / 100)
+nInsuranceMonth = None
+
+if payGrossMonth > 680.00 and payGrossMonth <= 3750.00:
+    nInsuranceMonth = ((payGrossMonth - 680.00) * 12) / 100
+elif payGrossMonth > 3750.00:
+    nInsuranceMonth = (((3750.00 - 680.00) * 12) / 100) + (((payGrossMonth - 3750.00) * 2) / 100)
+else:
+    nInsuranceMonth = 0.00
+    
 nInsuranceMonth = float('{0:.2f}'.format(nInsuranceMonth))
 print('National Insurance month is', nInsuranceMonth)
 print('\n')
 
-#Income tax week
-#incomeTaxWeek = 0
-#if payGrossWeek >= 221.33:
-#    incomeTaxWeek = ((payGrossWeek - 221.33) * 20) / 100
-#incomeTaxWeek = float('{0:.2f}'.format(incomeTaxWeek))
-#print('Income Tax week is', incomeTaxWeek)
 
 #Income tax month
-incomeTaxMonth = 0
-if payGrossMonth >= 958:
-    incomeTaxMonth = ((payGrossMonth - 958) * 20) / 100
+incomeTaxMonth = None
+if payGrossMonth > 959.08 and payGrossMonth <= 3750.00:
+    incomeTaxMonth = ((payGrossMonth - 959.08) * 20) / 100
+elif payGrossMonth > 3750.00 and payGrossMonth <= 8333.33:
+    incomeTaxMonth = (((3750.00 - 959.08) * 20) / 100) + (((payGrossMonth - 3750.00) * 40) / 100)
+elif payGrossMonth > 8333.33 and payGrossMonth <= 12500.00:
+    incomeTaxMonth = ((((3750.00 - (959.08 - ((payGrossMonth - 8333.33) / 2))) * 20)) / 100) + (((payGrossMonth - 3750.00) * 40) / 100)
+elif payGrossMonth > 12500.00:
+    incomeTaxMonth = ((3750.00 * 20) / 100) + (((payGrossMonth - 3750.00) * 40) / 100) +(((payGrossMonth - 12500.00) * 45) / 100)
+else:
+    incomeTaxMonth = 0
+
 incomeTaxMonth = float('{0:.2f}'.format(incomeTaxMonth))
 print('Income Tax month is', incomeTaxMonth)
 print('\n')
 
-#Total taxes week
-#totalTaxesWeek = nInsuranceWeek + incomeTaxWeek
-#totalTaxesWeek = float('{0:.2f}'.format(totalTaxesWeek))
-#print('Total taxes week is', totalTaxesWeek)
 
 #Total taxes month
 totalTaxesMonth = nInsuranceMonth + incomeTaxMonth
@@ -96,10 +87,6 @@ totalTaxesMonth = float('{0:.2f}'.format(totalTaxesMonth))
 print('Total taxes month is', totalTaxesMonth)
 print('\n')
 
-#Net pay week
-#netPayWeek = (payGrossWeek) - (nInsuranceWeek + incomeTaxWeek)
-#netPayWeek = float('{0:.2f}'.format(netPayWeek))
-#print('Net Pay week is', netPayWeek)
 
 #Net pay month
 netPayMonth = (payGrossMonth) - (nInsuranceMonth + incomeTaxMonth)
@@ -109,4 +96,4 @@ print('\n')
 
 print('Enjoy your pay day, lucky you !!!')
 
-#Compute contractual salary, then add extra hours(be careful with the tax rate)
+
