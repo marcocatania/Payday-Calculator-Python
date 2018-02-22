@@ -8,17 +8,27 @@
 
 #import "ViewController.h"
 
+
+
 float computePersonalAllowanceDecrease(float payGrossMonth){
     float decreaseAllowance;
     
     decreaseAllowance = (payGrossMonth - 8333.33) / 2;
-    return decreaseAllowance;
+    return fabsf(decreaseAllowance);
 }
 
-float computePayGrossMonth(float contractualHours, float extraHours, float rate, int weeks){
+
+
+float computePayGrossMonth(float contractualHours, float extraHours, float rate, int weeks, float week1, float week2, float week3, float week4, float week5){
     float payGrossMonth;
     
-    payGrossMonth = ((contractualHours * weeks) + extraHours) * rate;
+    if(week1){
+        payGrossMonth = (week1 + week2 + week3 + week4 + week5) * rate;
+    }
+    else{
+        payGrossMonth = ((contractualHours * weeks) + extraHours) * rate;
+    }
+    
     return fabsf(payGrossMonth);
 }
 
@@ -61,7 +71,15 @@ float computeNetPayMonth(float payGrossMonth, float nInsuranceMonth, float incom
 }
 
 @interface ViewController ()
+@property (weak, nonatomic) IBOutlet UITextField *week1Field;
 
+@property (weak, nonatomic) IBOutlet UITextField *week2Field;
+
+@property (weak, nonatomic) IBOutlet UITextField *week3Field;
+
+@property (weak, nonatomic) IBOutlet UITextField *week4Field;
+
+@property (weak, nonatomic) IBOutlet UITextField *week5Field;
 
 @property (weak, nonatomic) IBOutlet UITextField *contractualHoursField;
 
@@ -86,8 +104,13 @@ float computeNetPayMonth(float payGrossMonth, float nInsuranceMonth, float incom
     float extraHours = [self.extraHoursField.text floatValue];
     float rate = [self.rateField.text floatValue];
     int weeks = [self.weeksField.text intValue];
+    float week1 = [self.week1Field.text floatValue];
+    float week2 = [self.week2Field.text floatValue];
+    float week3 = [self.week3Field.text floatValue];
+    float week4 = [self.week4Field.text floatValue];
+    float week5 = [self.week5Field.text floatValue];
     
-    float payGrossMonth = computePayGrossMonth(contractualHours, extraHours, rate, weeks);
+    float payGrossMonth = computePayGrossMonth(contractualHours, extraHours, rate, weeks, week1, week2, week3, week4, week5);
     float nInsuranceMonth = computeNInsuranceMonth(payGrossMonth);
     float incomeTaxMonth = computeIncomeTaxMonth(payGrossMonth);
     float netPayMonth = computeNetPayMonth(payGrossMonth, nInsuranceMonth, incomeTaxMonth);
@@ -129,3 +152,4 @@ float computeNetPayMonth(float payGrossMonth, float nInsuranceMonth, float incom
 
 
 @end
+
